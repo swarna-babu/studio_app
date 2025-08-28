@@ -4,6 +4,45 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 const API = 'http://localhost:8000/api';
 const dummyImg = 'https://via.placeholder.com/96';
 
+const ALLOWED_CATEGORIES = [
+  {
+    name: 'Studio - Audio',
+    subcategories: [
+      'Song Recording',
+      'Dubbing',
+      'Stereo Mixing',
+      'Surround Mixing',
+      'Sfx',
+    ],
+  },
+  {
+    name: 'Studio - Video',
+    subcategories: [
+      'Offline Editing',
+      'Online Editing',
+      'Color Grading',
+    ],
+  },
+  {
+    name: 'Shooting',
+    subcategories: [
+      'Shooting Floors',
+      'Chromokey Studio',
+      'Virtual Studio',
+      'Shooting Houses',
+      'Other Locations',
+    ],
+  },
+  {
+    name: 'Additional Services',
+    subcategories: [
+      'Voice Banks',
+      'Editors',
+      'Sound Engineers',
+    ],
+  },
+];
+
 export default function StudiosList() {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
@@ -19,7 +58,20 @@ export default function StudiosList() {
   const location = useLocation();
 
   useEffect(() => {
-    fetch(`${API}/categories/`).then(r=>r.json()).then(setCategories);
+    fetch(`${API}/categories/`).then(r=>r.json()).then(data => {
+      // Filter categories and subcategories to only allowed
+      const filtered = [];
+      for (const allowed of ALLOWED_CATEGORIES) {
+        const found = data.find(c => c.name === allowed.name);
+        if (found) {
+          filtered.push({
+            ...found,
+            subcategories: (found.subcategories || []).filter(s => allowed.subcategories.includes(s.name)),
+          });
+        }
+      }
+      setCategories(filtered);
+    });
   }, []);
 
   const fetchStudios = useCallback(() => {
