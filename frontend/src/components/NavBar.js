@@ -18,7 +18,7 @@ export default function NavBar() {
     { to: '/studios', label: 'All Studios' },
     { to: '/studios?category=audio', label: 'Audio Studios' },
     { to: '/studios?category=video', label: 'Video Studios' },
-    { to: '/locations', label: 'Locations' },
+    { to: '/studios?category=shooting', label: 'Locations' },
   ];
 
   return (
@@ -47,25 +47,7 @@ export default function NavBar() {
             </Link>
           );
         })}
-        <div style={{ position: 'relative' }} onMouseEnter={()=>setCatOpen(true)} onMouseLeave={()=>{setCatOpen(false);setSubOpen(null);}}>
-          <div style={{ padding: '6px 10px', borderRadius: 16, background: catOpen ? '#000' : '#f2f2f2', color: catOpen ? '#fff' : '#000', cursor:'pointer' }}>Categories ▾</div>
-          {catOpen && (
-            <div style={{ position: 'absolute', top: 36, left: 0, background: '#fff', border: '1px solid #eee', borderRadius: 8, minWidth: 180, zIndex: 10, boxShadow: '0 2px 8px #0001' }}>
-              {categories.map(cat => (
-                <div key={cat.id} style={{ position: 'relative' }} onMouseEnter={()=>setSubOpen(cat.id)} onMouseLeave={()=>setSubOpen(null)}>
-                  <div style={{ padding: '8px 16px', cursor: 'pointer', whiteSpace: 'nowrap' }} onClick={()=>navigate(`/studios?category=${cat.id}`)}>{cat.name} ▸</div>
-                  {subOpen === cat.id && cat.subcategories && cat.subcategories.length > 0 && (
-                    <div style={{ position: 'absolute', top: 0, left: '100%', background: '#fff', border: '1px solid #eee', borderRadius: 8, minWidth: 160, zIndex: 20, boxShadow: '0 2px 8px #0001' }}>
-                      {cat.subcategories.map(sub => (
-                        <div key={sub.id} style={{ padding: '8px 16px', cursor: 'pointer', whiteSpace: 'nowrap' }} onClick={()=>navigate(`/studios?category=${cat.id}&subcategory=${sub.id}`)}>{sub.name}</div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        {/* Removed Categories dropdown */}
       </div>
     </nav>
   );

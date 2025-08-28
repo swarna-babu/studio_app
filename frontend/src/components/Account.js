@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MyBookings from './MyBookings';
 import SavedStudios from './SavedStudios';
 
 const salutationOptions = ['Mr.', 'Ms.', 'Mrs.', 'Dr.', 'Prof.'];
 
 export default function Account() {
+  const navigate = useNavigate();
   const [tab, setTab] = useState('details');
   const [salutation, setSalutation] = useState('Ms.');
   const [first, setFirst] = useState('');
@@ -24,6 +26,14 @@ export default function Account() {
     alert('Password updated (demo).');
   };
 
+  const handleSidebarNavigation = (route) => {
+    if (route === 'bookings') {
+      navigate('/bookings');
+    } else if (route === 'saved') {
+      navigate('/saved');
+    }
+  };
+
   return (
     <div style={{ minHeight: '100vh', background: '#fff', color: '#000', display: 'flex', flexDirection: 'column' }}>
       <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: 0, flex: 1, background: '#fff' }}>
@@ -41,11 +51,11 @@ export default function Account() {
               <svg width="18" height="18" fill="none" stroke="#1976d2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="8" width="12" height="8" rx="2"/><path d="M7 8V6a2 2 0 1 1 4 0v2"/></svg>
               Change password
             </button>
-            <button onClick={()=>setTab('bookings')} style={{ background: tab==='bookings' ? '#e3f0fd' : 'none', color: '#222', border: 'none', borderRadius: 8, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 8, width: '100%', fontWeight: 600, cursor: 'pointer' }}>
+            <button onClick={()=>handleSidebarNavigation('bookings')} style={{ background: 'none', color: '#222', border: 'none', borderRadius: 8, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 8, width: '100%', fontWeight: 600, cursor: 'pointer' }}>
               <svg width="18" height="18" fill="none" stroke="#1976d2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="8" width="12" height="8" rx="2"/><path d="M7 8V6a2 2 0 1 1 4 0v2"/></svg>
               My Bookings
             </button>
-            <button onClick={()=>setTab('saved')} style={{ background: tab==='saved' ? '#e3f0fd' : 'none', color: '#222', border: 'none', borderRadius: 8, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 8, width: '100%', fontWeight: 600, cursor: 'pointer' }}>
+            <button onClick={()=>handleSidebarNavigation('saved')} style={{ background: 'none', color: '#222', border: 'none', borderRadius: 8, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 8, width: '100%', fontWeight: 600, cursor: 'pointer' }}>
               <svg width="18" height="18" fill="none" stroke="#1976d2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 6a4 4 0 0 1 8 0c0 2.2-2 4-4 4s-4-1.8-4-4z"/><path d="M2 16c0-2.2 3-4 7-4s7 1.8 7 4"/></svg>
               Saved studios
             </button>
@@ -96,7 +106,7 @@ export default function Account() {
           )}
           {tab==='password' && (
             <div style={{ maxWidth: 420 }}>
-              <div style={{ fontWeight: 700, fontSize: 20, marginBottom: 24 }}>Change Password</div>
+              <div style={{ fontWeight: 700, fontSize: 20, marginBottom: 24 }}>Create new password</div>
               <div style={{ marginBottom: 16 }}>
                 <label style={{ fontWeight: 500, fontSize: 15 }}>Old password</label>
                 <input type="password" value={oldPw} onChange={(e)=>setOldPw(e.target.value)} style={{ width: '100%', padding: 8, fontSize: 15, borderRadius: 6, border: '1px solid #ddd', marginTop: 4 }} />
@@ -128,7 +138,7 @@ export default function Account() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', maxWidth: 1200, margin: '0 auto', padding: '0 48px' }}>
           <div>
             <div style={{ fontWeight: 700, fontSize: 16 }}>LOGO</div>
-            <div style={{ fontSize: 14, margin: '8px 0' }}>20 XYZ Road, India<br/>A81 2CD</div>
+            <div style={{ fontSize: 14, margin: '8px 0' }}>20 XYZ Road, India<br/>AB1 2CD</div>
             <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
               <span>🌐</span><span>🔗</span><span>🔗</span><span>🔗</span>
             </div>

@@ -18,19 +18,24 @@ export default function SavedStudios() {
   };
 
   return (
-    <div style={{ padding:24, background:'#fff', color:'#000' }}>
-      <h2>Saved studios</h2>
+    <div style={{ padding: 0, background: '#fff', color: '#000' }}>
       {items.map(st => (
-        <div key={st.id} style={{ display:'grid', gridTemplateColumns:'96px 1fr auto', gap:12, alignItems:'center', border:'1px solid #eee', borderRadius:8, padding:12, marginBottom:12 }}>
-          <img src={st.image_url || 'https://via.placeholder.com/96'} alt="studio" width={96} height={96} style={{ objectFit:'cover', borderRadius:8 }} />
-          <div>
-            <div style={{ fontWeight:600 }}>{st.name}</div>
-            <div style={{ fontSize:12 }}>{st.category} · {st.subcategory}</div>
-            <div>₹{st.basic_price} / hour · Rating {st.rating}</div>
+        <div key={st.id} style={{ display: 'flex', alignItems: 'center', background: '#fafbfc', borderRadius: 12, boxShadow: '0 2px 8px #0001', marginBottom: 28, padding: 24, gap: 32 }}>
+          <div style={{ minWidth: 120, minHeight: 120, background: '#eee', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <img src={st.image_url || 'https://via.placeholder.com/120'} alt="studio" width={120} height={120} style={{ objectFit: 'cover', borderRadius: 12 }} />
           </div>
-          <div style={{ display:'flex', gap:8 }}>
-            <Link to={`/studios/${st.id}`}><button>View</button></Link>
-            <button onClick={()=>remove(st.id)}>Remove</button>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 6 }}>{st.name || 'Studio Name'}</div>
+            <div style={{ color: '#555', fontSize: 14, marginBottom: 2 }}>{st.category}{st.subcategory ? ', ' + st.subcategory : ''}</div>
+            <div style={{ color: '#888', fontSize: 13, marginBottom: 2 }}>Other Details</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 8 }}>
+              <span style={{ fontWeight: 700, fontSize: 16 }}>★ {st.rating || '4.8'}</span>
+              <span style={{ fontWeight: 700, fontSize: 18, marginLeft: 12 }}>₹{st.basic_price || '400'}<span style={{ fontWeight: 400, fontSize: 15, marginLeft: 2 }}>/Hour</span></span>
+            </div>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <Link to={`/studios/${st.id}`}><button style={{ border: '1.5px solid #222', background: '#fff', color: '#222', borderRadius: 24, padding: '8px 28px', fontWeight: 600, fontSize: 15, cursor: 'pointer' }}>View</button></Link>
+            <button onClick={()=>remove(st.id)} style={{ border: 'none', background: '#222', color: '#fff', borderRadius: 24, padding: '8px 28px', fontWeight: 600, fontSize: 15, cursor: 'pointer' }}>Remove</button>
           </div>
         </div>
       ))}

@@ -4,18 +4,60 @@ export default function MyBookings() {
   const [tab, setTab] = useState('ongoing');
   const demo = [
     {
-      id: 'A025421', studioName: 'Metal Dubbing House', studioType: 'Audio', total: 18000, status: 'Pending request', date: '01 Jan 2023', time: '10:00 - 11:00 AM', requirements: 'Vocal editor role', canEdit: true
+      id: '45265423', 
+      studioName: 'Mansil shooting house', 
+      studioType: 'Shooting', 
+      total: 15000, 
+      status: 'Pending request', 
+      requirements: 'Make up room-2, Discussion room, Light',
+      dates: [
+        { date: '01 Jan 2023', time: '10:00 - 11:00 AM' },
+        { date: '02 Jan 2023', time: '10:00 - 11:00 AM' }
+      ],
+      canEdit: true
     },
     {
-      id: 'A025422', studioName: 'AWIC Dubbing studio', studioType: 'Audio', total: 18000, status: 'Pending request', date: '20 Jan 2023', time: '10:00 - 11:00 AM', requirements: 'Vocal editor role', canEdit: true
+      id: '45265423', 
+      studioName: 'Kirali Dubbing studio', 
+      studioType: 'Audio', 
+      total: 15000, 
+      status: 'Pending request', 
+      requirements: 'Inhouse editor senior',
+      dates: [
+        { date: '20 Jan 2023', time: '10:00 - 11:00 AM' }
+      ],
+      canEdit: true
     },
     {
-      id: 'A025423', studioName: 'Mansi Shooting House', studioType: 'Shooting', total: 15000, status: 'Confirmed', date: '01 Jan 2023', time: '10:00 - 11:00 AM', requirements: 'Manual shooting role', canReschedule: true
+      id: '45265423', 
+      studioName: 'Marsil shooting house', 
+      studioType: 'Shooting', 
+      total: 15000, 
+      status: 'Confirmed', 
+      requirements: 'Make up room-2, Discussion room, Light',
+      dates: [
+        { date: '01 Jan 2023', time: '10:00 - 11:00 AM' },
+        { date: '02 Jan 2023', time: '02:00 - 04:00 PM' },
+        { date: '02 Jan 2023', time: '10:00 - 11:00 AM' }
+      ],
+      canReschedule: true
     },
     {
-      id: 'A025424', studioName: 'AWIC Dubbing studio', studioType: 'Audio', total: 18000, status: 'Confirmed', date: '02 Jan 2023', time: '10:00 - 11:00 AM', requirements: 'Junior mixing engineer', canReschedule: true
-    },
+      id: '45265423', 
+      studioName: 'AVG: Dubbing studio', 
+      studioType: 'Audio', 
+      total: 15000, 
+      status: 'Confirmed', 
+      requirements: 'inhouse mixing engineer junior',
+      dates: [
+        { date: '01 Jan 2023', time: '10:00 - 11:00 AM' },
+        { date: '02 Jan 2023', time: '00:00 - 04:00 PM' },
+        { date: '02 Jan 2023', time: '10:00 - 11:00 AM' }
+      ],
+      canReschedule: true
+    }
   ];
+
   return (
     <div style={{ minHeight: '100vh', background: '#fff', color: '#000', display: 'flex', flexDirection: 'column' }}>
       <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: 0, flex: 1, background: '#fff' }}>
@@ -43,18 +85,26 @@ export default function MyBookings() {
           <div style={{ maxWidth: 900 }}>
             {demo.filter(b => tab==='ongoing' ? b.status!=='Completed' : b.status==='Completed').map(b => (
               <div key={b.id} style={{ border:'1px solid #eee', borderRadius:12, padding:24, marginBottom:24, background:'#fff', boxShadow:'0 2px 8px #0001' }}>
-                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom: 8 }}>
-                  <div style={{ fontWeight:700, fontSize:16 }}>Booking ID <span style={{ color:'#1976d2' }}>{b.id}</span></div>
-                  <div style={{ fontWeight:600, fontSize:15 }}>{b.studioType} Studio</div>
-                  <div style={{ fontWeight:600, fontSize:15 }}>Total charge <span style={{ color:'#1976d2' }}>₹ {b.total}</span></div>
-                  <div style={{ fontWeight:600, fontSize:15 }}>{b.date}</div>
-                  <div style={{ fontWeight:600, fontSize:15 }}>{b.time}</div>
+                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom: 16 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    <div style={{ fontWeight:700, fontSize:16 }}>Booking ID <span style={{ color:'#1976d2' }}>{b.id}</span></div>
+                    <div style={{ fontWeight:600, fontSize:15 }}>{b.studioType} Studio</div>
+                    <div style={{ fontWeight:600, fontSize:15 }}>Studio Name: <span style={{ color:'#222' }}>{b.studioName}</span></div>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'flex-end' }}>
+                    <div style={{ fontWeight:600, fontSize:15 }}>Total charge <span style={{ color:'#1976d2' }}>₹ {b.total}</span></div>
+                    <div style={{ fontWeight:600, fontSize:15 }}>Status: <span style={{ color:'#1976d2' }}>{b.status}</span></div>
+                  </div>
                 </div>
-                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom: 8 }}>
-                  <div style={{ fontWeight:500, fontSize:15 }}>Studio Name: <span style={{ color:'#222' }}>{b.studioName}</span></div>
-                  <div style={{ fontWeight:500, fontSize:15 }}>Status: <span style={{ color:'#1976d2' }}>{b.status}</span></div>
+                <div style={{ fontSize:14, color:'#555', marginBottom: 16 }}>Requirements: <span style={{ color:'#222' }}>{b.requirements}</span></div>
+                <div style={{ marginBottom: 16 }}>
+                  <div style={{ fontWeight:600, fontSize:15, marginBottom: 8 }}>Dates & Times:</div>
+                  {b.dates.map((date, index) => (
+                    <div key={index} style={{ fontSize:14, color:'#222', marginBottom: 4 }}>
+                      {date.date}: {date.time}
+                    </div>
+                  ))}
                 </div>
-                <div style={{ fontSize:14, color:'#555', marginBottom: 8 }}>Requirements: <span style={{ color:'#222' }}>{b.requirements}</span></div>
                 <div style={{ display:'flex', gap:8, justifyContent:'flex-end' }}>
                   {b.canEdit && <button style={{ border:'1px solid #1976d2', background:'#fff', color:'#1976d2', borderRadius:6, padding:'6px 18px', fontWeight:600, cursor:'pointer' }}>Edit</button>}
                   {b.canEdit && <button style={{ border:'1px solid #ddd', background:'#fff', color:'#222', borderRadius:6, padding:'6px 18px', fontWeight:600, cursor:'pointer' }}>Cancel</button>}
@@ -70,7 +120,7 @@ export default function MyBookings() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', maxWidth: 1200, margin: '0 auto', padding: '0 48px' }}>
           <div>
             <div style={{ fontWeight: 700, fontSize: 16 }}>LOGO</div>
-            <div style={{ fontSize: 14, margin: '8px 0' }}>20 XYZ Road, India<br/>A81 2CD</div>
+            <div style={{ fontSize: 14, margin: '8px 0' }}>20 XYZ Road, India<br/>AB1 2CD</div>
             <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
               <span>🌐</span><span>🔗</span><span>🔗</span><span>🔗</span>
             </div>
